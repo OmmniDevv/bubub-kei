@@ -1,21 +1,47 @@
 const express = require('express');
 const path = require('path');
+const fs = require('fs');
+
 const app = express();
 
 // Serve static files from public directory
 app.use(express.static(path.join(__dirname, '../public')));
 app.use(express.json());
 
+// Path ke file JSON
+const commentsFilePath = path.join(__dirname, 'comments.json');
+
+// Fungsi untuk membaca komentar dari file JSON
+function getCommentsFromFile() {
+  try {
+    const commentsData = fs.readFileSync(commentsFilePath, 'utf8');
+    return JSON.parse(commentsData);
+  } catch (error) {
+    console.error('Error reading comments file:', error);
+    return [];
+  }
+}
+
+// Fungsi untuk menyimpan komentar ke file JSON
+function saveCommentToFile(comment) {
+  try {
+    const comments = getCommentsFromFile();
+    comments.push(comment);
+    fs.writeFileSync(commentsFilePath, JSON.stringify(comments, null, 2));
+  } catch (error) {
+    console.error('Error saving comment to file:', error);
+  }
+}
+
 // API endpoints
 app.get('/api/comments', (req, res) => {
-  // Ganti dengan logika untuk mengambil semua komentar dari database
-  res.json([
-    { username: 'Alik', comment: 'cihuyy' },
-  ]);
+  res.json(getCommentsFromFile());
 });
 
 app.post('/api/comments', (req, res) => {
-  // Ganti dengan logika untuk menyimpan komentar ke database
+  const { username, comment } = req.body;
+  const newComment = { username, comment };
+  saveCommentToFile(newComment);
   res.json({ message: 'Komentar berhasil disimpan' });
 });
 
