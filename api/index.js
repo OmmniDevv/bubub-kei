@@ -10,11 +10,7 @@ app.use(express.json());
 app.get('/api/comments', (req, res) => {
   // Ganti dengan logika untuk mengambil semua komentar dari database
   res.json([
-    { username: 'Alik', comment: 'Komentar 1' },
-    { username: 'Keiii', comment: 'Komentar 2' },
-    { username: 'Alikk', comment: 'Komentar 3' },
-    { username: 'Alice', comment: 'Komentar 4' },
-    { username: 'Bob', comment: 'Komentar 5' },
+    { username: 'Alik', comment: 'cihuyy' },
   ]);
 });
 
