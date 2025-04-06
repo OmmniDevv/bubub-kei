@@ -233,19 +233,11 @@
 
 <script>
     // Love Counter
-    const loveCounter = document.getElementById('love-counter');
-    let loveCount = 0;
-
-    function updateLoveCounter() {
-      loveCounter.textContent = `❤️ ${loveCount} Days of Love`;
-    }
-
-    function incrementLoveCounter() {
-      loveCount++;
-      updateLoveCounter();
-    }
-
-    setInterval(incrementLoveCounter, 86400000); // 1 hari
+    const startDate = new Date("2025-03-05");
+        const today = new Date();
+        const difference = today - startDate;
+        const days = Math.floor(difference / (1000 * 3600 * 24));
+        document.getElementById("love-counter").innerText = "Days of Love: " + days + " ❤️";
 
      // Menampilkan popup komentar
 async function getAllComments() {
