@@ -3,6 +3,7 @@
 <head>
   <title>💖Alik & Keiii Love Story💖</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <style>
         /* Keyframes for Floating Hearts */
         @keyframes float {
@@ -84,8 +85,7 @@
     }
   </style>
 </head>
-<body class=
-"bg-gradient-to-br from-pink-100 to-pink-300 min-h-screen flex justify-center items-center px-4 relative">
+<body class="bg-gradient-to-br from-pink-100 to-pink-300 min-h-screen flex justify-center items-center px-4 relative">
   <!-- Floating Hearts -->
   <div class=
   "absolute top-0 left-0 w-full h-full pointer-events-none">
@@ -222,79 +222,80 @@
 </div>
 
 <script>
-  // Love Counter
-  const loveCounter = document.getElementById('love-counter');
-  let loveCount = 0;
+    // Love Counter
+    const loveCounter = document.getElementById('love-counter');
+    let loveCount = 0;
 
-  function updateLoveCounter() {
-    loveCounter.textContent = `❤️ ${loveCount} Days of Love`;
-  }
+    function updateLoveCounter() {
+      loveCounter.textContent = `❤️ ${loveCount} Days of Love`;
+    }
 
-  function incrementLoveCounter() {
-    loveCount++;
-    updateLoveCounter();
-  }
+    function incrementLoveCounter() {
+      loveCount++;
+      updateLoveCounter();
+    }
 
-  setInterval(incrementLoveCounter, 86400000); // 1 hari
+    setInterval(incrementLoveCounter, 86400000); // 1 hari
 
-  // Menampilkan komentar
-  async function getComments() {
-    try {
-      const response = await axios.get('/comments');
-      const comments = response.data;
+    // Menampilkan komentar
+    async function getComments() {
+      try {
+        const response = await axios.get('/api/comments');
+        const comments = response.data;
 
-      comments.forEach((comment) => {
+        comments.forEach((comment) => {
+          const commentItem = document.createElement('div');
+          commentItem.classList.add('comment-item');
+          commentItem.innerHTML = `
+            <span class="comment-username">${comment.username}</span>
+            <span class="comment-text">${comment.comment}</span>
+          `;
+          document.getElementById('comment-list').appendChild(commentItem);
+        });
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    // Menampilkan popup komentar
+    const commentButton = document.getElementById('comment-button');
+    const commentPopup = document.getElementById('comment-popup');
+
+    commentButton.addEventListener('click', () => {
+      commentPopup.classList.toggle('show');
+    });
+
+    // Mengirim komentar
+    const commentForm = document.getElementById('comment-form');
+
+    commentForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const username = document.getElementById('username').value;
+      const comment = document.getElementById('comment-input').value;
+
+      try {
+        const response = await axios.post('/api/comments', {
+          username,
+          comment,
+        });
+
         const commentItem = document.createElement('div');
         commentItem.classList.add('comment-item');
         commentItem.innerHTML = `
-          <span class="comment-username">${comment.username}</span>
-          <span class="comment-text">${comment.comment}</span>
+          <span class="comment-username">${username}</span>
+          <span class="comment-text">${comment}</span>
         `;
         document.getElementById('comment-list').appendChild(commentItem);
-      });
-    } catch (error) {
-      console.error(error);
-    }
-  }
 
-  // Menampilkan popup komentar
-  const commentButton = document.getElementById('comment-button');
-  const commentPopup = document.getElementById('comment-popup');
+        document.getElementById('comment-input').value = '';
+      } catch (error) {
+        console.error(error);
+      }
+    });
 
-  commentButton.addEventListener('click', () => {
-    commentPopup.classList.toggle('show');
-  });
-
-  // Mengirim komentar
-  const commentForm = document.getElementById('comment-form');
-
-  commentForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const username = document.getElementById('username').value;
-    const comment = document.getElementById('comment-input').value;
-
-    try {
-      const response = await axios.post('/comments', {
-        username,
-        comment,
-      });
-
-      const commentItem = document.createElement('div');
-      commentItem.classList.add('comment-item');
-      commentItem.innerHTML = `
-        <span class="comment-username">${username}</span>
-        <span class="comment-text">${comment}</span>
-      `;
-      document.getElementById('comment-list').appendChild(commentItem);
-
-      document.getElementById('comment-input').value = '';
-    } catch (error) {
-      console.error(error);
-    }
-  });
-
-  getComments();
-  updateLoveCounter();
-</script>
+    getComments();
+    updateLoveCounter();
+  </script>
 </body>
       </html>
+        
