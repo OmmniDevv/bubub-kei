@@ -4,7 +4,6 @@ const fs = require('fs');
 const path = require('path');
 
 app.use(express.json());
-app.use(express.static('public'));
 
 const commentsFile = path.join(__dirname, 'comments.json');
 
@@ -35,10 +34,6 @@ app.post('/comments', (req, res) => {
       });
     }
   });
-});
-
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 module.exports = app;
