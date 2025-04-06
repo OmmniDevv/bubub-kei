@@ -215,8 +215,8 @@
   </div>
 
   <!-- Popup Komentar -->
-  <div class="comment-popup" id="comment-popup">
-    <h2 class="text-2xl font-semibold text-pink-700">Komentar</h2>
+ <div class="comment-popup" id="comment-popup">
+    <h2 class="text-2xl font-semibold text-pink-700">Semua Komentar</h2>
     <div class="comment-list" id="comment-list"></div>
     <button class="bg-pink-500 text-white px-4 py-2 rounded-lg mt-4 hover:bg-pink-600 transition" id="close-comment-popup">Tutup</button>
   </div>
@@ -248,6 +248,29 @@
     setInterval(incrementLoveCounter, 86400000); // 1 hari
 
      // Menampilkan popup komentar
+async function getAllComments() {
+      try {
+        const response = await axios.get('/api/comments');
+        const comments = response.data;
+
+        const commentList = document.getElementById('comment-list');
+        commentList.innerHTML = '';
+
+        comments.forEach((comment) => {
+          const commentItem = document.createElement('div');
+          commentItem.classList.add('comment-item');
+          commentItem.innerHTML = `
+            <span class="comment-username">${comment.username}</span>
+            <span class="comment-text">${comment.comment}</span>
+          `;
+          commentList.appendChild(commentItem);
+        });
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    // Menampilkan popup komentar
     const commentButton = document.getElementById('comment-button');
     const commentListButton = document.getElementById('comment-list-button');
     const commentPopup = document.getElementById('comment-popup');
@@ -259,12 +282,13 @@
     });
 
     commentListButton.addEventListener('click', () => {
-      getComments();
+      getAllComments();
       commentPopup.classList.toggle('show');
     });
 
     closeCommentPopupButton.addEventListener('click', () => {
       commentPopup.classList.remove('show');
+      commentFormPopup.classList.remove('show');
     });
 
     // Mengirim komentar
@@ -287,7 +311,7 @@
           <span class="comment-username">${username}</span>
           <span class="comment-text">${comment}</span>
         `;
-        document.getElementById('comment-list').appendChild(commentItem);
+        document.getElementById('comment-list').insertBefore(commentItem, document.getElementById('comment-list').firstChild);
 
         document.getElementById('comment-input').value = '';
         commentFormPopup.classList.remove('show');
