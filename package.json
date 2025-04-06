@@ -5,12 +5,11 @@
   "main": "api/index.js",
   "scripts": {
     "start": "node api/index.js",
-    "dev": "nodemon api/index.js",
-    "build": "echo 'No build step needed'"
+    "dev": "nodemon api/index.js"
   },
   "dependencies": {
-    "axios": "^1.3.4",
     "express": "^4.17.1",
+    "fs": "^0.0.1-security",
     "path": "^0.12.7"
   },
   "devDependencies": {
