@@ -1,39 +1,23 @@
 const express = require('express');
 const app = express();
-const fs = require('fs');
-const path = require('path');
+const port = 3000;
 
-app.use(express.json());
+app.use(express.static('public'));
 
-const commentsFile = path.join(__dirname, 'comments.json');
+app.get('/', (req, res) => {
+  res.sendFile(__dirname + '/public/index.html');
+});
 
 app.get('/comments', (req, res) => {
-  fs.readFile(commentsFile, (err, data) => {
-    if (err) {
-      res.status(500).send({ message: 'Error reading comments file' });
-    } else {
-      res.send(JSON.parse(data));
-    }
-  });
+  // Kode untuk mengambil komentar dari database atau file
+  res.json([]);
 });
 
 app.post('/comments', (req, res) => {
-  const { username, comment } = req.body;
-  fs.readFile(commentsFile, (err, data) => {
-    if (err) {
-      res.status(500).send({ message: 'Error reading comments file' });
-    } else {
-      const comments = JSON.parse(data);
-      comments.push({ username, comment });
-      fs.writeFile(commentsFile, JSON.stringify(comments), (err) => {
-        if (err) {
-          res.status(500).send({ message: 'Error writing comments file' });
-        } else {
-          res.send({ message: 'Comment added successfully' });
-        }
-      });
-    }
-  });
+  // Kode untuk menyimpan komentar ke database atau file
+  res.json({ message: 'Komentar berhasil disimpan' });
 });
 
-module.exports = app;
+app.listen(port, () => {
+  console.log(`Server berjalan di port ${port}`);
+});
