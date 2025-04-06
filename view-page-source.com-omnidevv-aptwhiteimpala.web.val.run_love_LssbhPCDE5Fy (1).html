@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>name's Love Story</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+        /* Keyframes for Floating Hearts */
+        @keyframes float {
+          0% { transform: translateY(0) scale(1); opacity: 1; }
+          100% { transform: translateY(-100vh) scale(1.2); opacity: 0; }
+        }
+
+        /* Floating Hearts */
+        .heart {
+          position: absolute;
+          font-size: 1.5rem;
+          color: #ff4d6d;
+          animation: float 6s linear infinite;
+        }
+
+        /* Fade-in Animation */
+        .fade-in {
+          opacity: 0;
+          transform: translateY(20px);
+          animation: fadeIn 1.5s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+          0% { opacity: 0; transform: translateY(20px); }
+          100% { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Glassmorphism Effect */
+        .glass {
+          background: rgba(255, 255, 255, 0.2);
+          backdrop-filter: blur(10px);
+          border-radius: 15px;
+          padding: 20px;
+          box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+  </style>
+</head>
+<body class=
+"bg-gradient-to-br from-pink-100 to-pink-300 min-h-screen flex justify-center items-center px-4 relative">
+  <!-- Floating Hearts -->
+  <div class=
+  "absolute top-0 left-0 w-full h-full pointer-events-none">
+    <div class="heart" style=
+    "left: 96.0276711900654%; animation-duration: 4.177814791539541s;">
+      
+    </div>
+    <div class="heart" style=
+    "left: 43.01359650132434%; animation-duration: 5.471255008817578s;">
+      
+    </div>
+    <div class="heart" style=
+    "left: 84.79679105370421%; animation-duration: 4.030110726231684s;">
+      
+    </div>
+    <div class="heart" style=
+    "left: 34.39287948285759%; animation-duration: 5.637471532897674s;">
+      
+    </div>
+    <div class="heart" style=
+    "left: 73.12617311988757%; animation-duration: 4.629987293673677s;">
+      
+    </div>
+    <div class="heart" style=
+    "left: 23.277569361981065%; animation-duration: 4.086552473095739s;">
+      
+    </div>
+    <div class="heart" style=
+    "left: 97.99334546331795%; animation-duration: 4.963124158627037s;">
+      
+    </div>
+    <div class="heart" style=
+    "left: 79.20203914837214%; animation-duration: 3.301991863885149s;">
+      
+    </div>
+    <div class="heart" style=
+    "left: 61.563018644913%; animation-duration: 5.519724843109987s;">
+      
+    </div>
+    <div class="heart" style=
+    "left: 33.30717235110077%; animation-duration: 3.129738284258935s;">
+      
+    </div>
+    <div class="heart" style=
+    "left: 95.56932053501251%; animation-duration: 5.264243332508524s;">
+      
+    </div>
+    <div class="heart" style=
+    "left: 11.807467585702724%; animation-duration: 3.18468182646943s;">
+      
+    </div>
+    <div class="heart" style=
+    "left: 54.105527488509765%; animation-duration: 5.1126584499528125s;">
+      
+    </div>
+    <div class="heart" style=
+    "left: 87.45285128900792%; animation-duration: 4.828825938976571s;">
+      
+    </div>
+    <div class="heart" style=
+    "left: 87.00769680202339%; animation-duration: 4.7199907830943335s;">
+      
+    </div>
+  </div><!-- Main Content -->
+  <div class="glass max-w-2xl w-full p-8 text-center fade-in">
+    <h1 class="text-4xl font-extrabold text-pink-700"> Keiii Love
+    Story </h1>
+    <p class="text-lg mt-2 text-gray-700">Together Since:
+    <span class="font-bold">2025-03-05</span></p>
+    <!-- Love Counter -->
+    <div class=
+    "mt-4 text-pink-800 text-2xl font-semibold bg-white p-4 rounded-lg shadow-md inline-block"
+    id="love-counter"></div><!-- Our Song -->
+    <div class=
+    "mt-6 bg-white shadow-lg rounded-lg p-4 flex flex-col items-center fade-in">
+      <h2 class="text-2xl font-semibold text-pink-700">Our Song
+      </h2><img src=
+      "https://img.youtube.com/vi/IpFX2vq8HKw/maxresdefault.jpg"
+      class=
+      "w-full max-w-md rounded-lg shadow-md mt-2 transition-transform hover:scale-105">
+      <a href="https://youtu.be/IpFX2vq8HKw?si=l1sz09iXcZuu-fHh"
+      target="_blank" class=
+      "bg-pink-500 text-white px-4 py-2 rounded-lg mt-4 hover:bg-pink-600 transition">
+       Listen Now</a>
+    </div><!-- Love Letter -->
+    <div class=
+    "mt-6 bg-white p-6 rounded-lg shadow-lg border-l-4 border-pink-500 fade-in">
+      <h2 class="text-2xl font-semibold text-pink-700">Love Letter
+      </h2>
+      <p class="text-gray-700 mt-2">My dearest love, every moment
+      with you feels like a beautiful dream...</p>
+    </div><!-- Memory Gallery -->
+    <div class="mt-6 fade-in">
+      <h2 class="text-2xl font-semibold text-pink-700">Our Memories
+      </h2>
+      <div class="grid grid-cols-3 gap-4 mt-4">
+        <div class="overflow-hidden rounded-lg shadow-md"><img src=
+        "ambatukam.jpg"
+         class=
+        "w-full h-32 object-cover transition-transform hover:scale-110"></div>
+        <div class="overflow-hidden rounded-lg shadow-md"><img src=
+        "gacor.jpg"
+         class=
+        "w-full h-32 object-cover transition-transform hover:scale-110"></div>
+        <div class="overflow-hidden rounded-lg shadow-md"><img src=
+        "uhuy.jpg"
+        class=
+        "w-full h-32 object-cover transition-transform hover:scale-110"></div>
+        <div class="overflow-hidden rounded-lg shadow-md"><img src=
+        "duar.jpg"
+         class=
+        "w-full h-32 object-cover transition-transform hover:scale-110"></div>
+        <div class="overflow-hidden rounded-lg shadow-md"><img src=
+        "jjaja.jpg"
+        class=
+        "w-full h-32 object-cover transition-transform hover:scale-110"></div>
+        <div class="overflow-hidden rounded-lg shadow-md"><img src=
+        "uhuyy.jpg"
+        class=
+        "w-full h-32 object-cover transition-transform hover:scale-110"></div>
+      </div>
+    </div>
+  </div>
+  <script>
+        // Love Counter
+        const startDate = new Date("2025-03-05");
+        const today = new Date();
+        const difference = today - startDate;
+        const days = Math.floor(difference / (1000 * 3600 * 24));
+        document.getElementById("love-counter").innerText = "Days of Love: " + days + " ";
+  </script>
+</body>
+</html>
