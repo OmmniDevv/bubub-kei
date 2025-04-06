@@ -1,6 +1,6 @@
 const express = require('express');
 const path = require('path');
-const fs = require('fs');
+const { MongoClient } = require('mongodb');
 
 const app = express();
 
@@ -8,41 +8,47 @@ const app = express();
 app.use(express.static(path.join(__dirname, '../public')));
 app.use(express.json());
 
-// Path ke file JSON
-const commentsFilePath = path.join(__dirname, 'comments.json');
+// Koneksi ke MongoDB
+const mongoUrl = 'mongodb+srv://znslrd:znslrd021@gatau.mfiywiw.mongodb.net/?retryWrites=true&w=majority&appName=gatau';
+const mongoDbName = 'comment-db';
+const mongoCollectionName = 'comments';
 
-// Fungsi untuk membaca komentar dari file JSON
-function getCommentsFromFile() {
-  try {
-    const commentsData = fs.readFileSync(commentsFilePath, 'utf8');
-    return JSON.parse(commentsData);
-  } catch (error) {
-    console.error('Error reading comments file:', error);
-    return [];
-  }
+async function getCommentsFromDb() {
+  const client = await MongoClient.connect(mongoUrl);
+  const db = client.db(mongoDbName);
+  const comments = await db.collection(mongoCollectionName).find({}).toArray();
+  client.close();
+  return comments;
 }
 
-// Fungsi untuk menyimpan komentar ke file JSON
-function saveCommentToFile(comment) {
-  try {
-    const comments = getCommentsFromFile();
-    comments.push(comment);
-    fs.writeFileSync(commentsFilePath, JSON.stringify(comments, null, 2));
-  } catch (error) {
-    console.error('Error saving comment to file:', error);
-  }
+async function saveCommentToDb(comment) {
+  const client = await MongoClient.connect(mongoUrl);
+  const db = client.db(mongoDbName);
+  await db.collection(mongoCollectionName).insertOne(comment);
+  client.close();
 }
 
 // API endpoints
-app.get('/api/comments', (req, res) => {
-  res.json(getCommentsFromFile());
+app.get('/api/comments', async (req, res) => {
+  try {
+    const comments = await getCommentsFromDb();
+    res.json(comments);
+  } catch (error) {
+    console.error('Error getting comments from database:', error);
+    res.status(500).json({ message: 'Error getting comments' });
+  }
 });
 
-app.post('/api/comments', (req, res) => {
-  const { username, comment } = req.body;
-  const newComment = { username, comment };
-  saveCommentToFile(newComment);
-  res.json({ message: 'Komentar berhasil disimpan' });
+app.post('/api/comments', async (req, res) => {
+  try {
+    const { username, comment } = req.body;
+    const newComment = { username, comment };
+    await saveCommentToDb(newComment);
+    res.json({ message: 'Komentar berhasil disimpan' });
+  } catch (error) {
+    console.error('Error saving comment to database:', error);
+    res.status(500).json({ message: 'Error saving comment' });
+  }
 });
 
 // Handle all other routes by serving index.html
