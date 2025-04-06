@@ -40,7 +40,6 @@
           box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
         }
         
-    /* Comment Popup */
     .comment-popup {
       position: fixed;
       top: 50%;
@@ -51,7 +50,11 @@
       border-radius: 15px;
       box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
       display: none;
-      backdrop-filter: blur(10px);
+      z-index: 9999;
+      width: 80%;
+      max-width: 600px;
+      max-height: 80%;
+      overflow-y: auto;
     }
 
     .comment-popup.show {
@@ -206,20 +209,27 @@
         "w-full h-32 object-cover transition-transform hover:scale-110"></div>
         
         <!-- button -->
- <button class="bg-pink-500 text-white px-4 py-2 rounded-lg hover:bg-pink-600 transition" id="comment-button">💬 Leave a Comment</button>
+  <div class="mt-4 flex justify-center space-x-4">
+    <button class="bg-pink-500 text-white px-4 py-2 rounded-lg hover:bg-pink-600 transition" id="comment-button">💬 Leave a Comment</button>
+    <button class="bg-pink-500 text-white px-4 py-2 rounded-lg hover:bg-pink-600 transition" id="comment-list-button">💬 Comment List</button>
+  </div>
 
-<!-- Comment List -->
-<div class="comment-list" id="comment-list"></div>
+  <!-- Popup Komentar -->
+  <div class="comment-popup" id="comment-popup">
+    <h2 class="text-2xl font-semibold text-pink-700">Komentar</h2>
+    <div class="comment-list" id="comment-list"></div>
+    <button class="bg-pink-500 text-white px-4 py-2 rounded-lg mt-4 hover:bg-pink-600 transition" id="close-comment-popup">Tutup</button>
+  </div>
 
-<!-- Comment Popup -->
-<div class="comment-popup" id="comment-popup">
-  <h2 class="text-2xl font-semibold text-pink-700">Komentar</h2>
-  <form id="comment-form">
-    <input type="text" id="username" placeholder="Username" class="w-full p-2 rounded-lg border border-gray-300">
-    <textarea id="comment-input" placeholder="Tulis komentar..." class="w-full p-2 rounded-lg border border-gray-300"></textarea>
-    <button type="submit" class="bg-pink-500 text-white px-4 py-2 rounded-lg mt-4 hover:bg-pink-600 transition">Kirim</button>
-  </form>
-</div>
+  <!-- Formulir Komentar -->
+  <div class="comment-popup" id="comment-form-popup">
+    <h2 class="text-2xl font-semibold text-pink-700">Tulis Komentar</h2>
+    <form id="comment-form">
+      <input type="text" id="username" placeholder="Username" class="w-full p-2 rounded-lg border border-gray-300">
+      <textarea id="comment-input" placeholder="Tulis komentar..." class="w-full p-2 rounded-lg border border-gray-300"></textarea>
+      <button type="submit" class="bg-pink-500 text-white px-4 py-2 rounded-lg mt-4 hover:bg-pink-600 transition">Kirim</button>
+    </form>
+  </div>
 
 <script>
     // Love Counter
@@ -237,32 +247,24 @@
 
     setInterval(incrementLoveCounter, 86400000); // 1 hari
 
-    // Menampilkan komentar
-    async function getComments() {
-      try {
-        const response = await axios.get('/api/comments');
-        const comments = response.data;
-
-        comments.forEach((comment) => {
-          const commentItem = document.createElement('div');
-          commentItem.classList.add('comment-item');
-          commentItem.innerHTML = `
-            <span class="comment-username">${comment.username}</span>
-            <span class="comment-text">${comment.comment}</span>
-          `;
-          document.getElementById('comment-list').appendChild(commentItem);
-        });
-      } catch (error) {
-        console.error(error);
-      }
-    }
-
-    // Menampilkan popup komentar
+     // Menampilkan popup komentar
     const commentButton = document.getElementById('comment-button');
+    const commentListButton = document.getElementById('comment-list-button');
     const commentPopup = document.getElementById('comment-popup');
+    const commentFormPopup = document.getElementById('comment-form-popup');
+    const closeCommentPopupButton = document.getElementById('close-comment-popup');
 
     commentButton.addEventListener('click', () => {
+      commentFormPopup.classList.toggle('show');
+    });
+
+    commentListButton.addEventListener('click', () => {
+      getComments();
       commentPopup.classList.toggle('show');
+    });
+
+    closeCommentPopupButton.addEventListener('click', () => {
+      commentPopup.classList.remove('show');
     });
 
     // Mengirim komentar
@@ -288,13 +290,11 @@
         document.getElementById('comment-list').appendChild(commentItem);
 
         document.getElementById('comment-input').value = '';
+        commentFormPopup.classList.remove('show');
       } catch (error) {
         console.error(error);
       }
     });
-
-    getComments();
-    updateLoveCounter();
   </script>
 </body>
       </html>
