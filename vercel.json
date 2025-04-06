@@ -8,8 +8,9 @@
   ],
   "routes": [
     {
-      "src": "/comments",
+      "src": "/(.*)",
       "dest": "server.js"
     }
-  ]
+  ],
+  "public": "public"
 }
