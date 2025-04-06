@@ -8,10 +8,16 @@ app.use(express.json());
 
 // API endpoints
 app.get('/api/comments', (req, res) => {
-  res.json([]);
+  // Ganti dengan logika untuk mengambil komentar dari database
+  res.json([
+    { username: 'Alik', comment: 'Komentar 1' },
+    { username: 'Keiii', comment: 'Komentar 2' },
+    { username: 'Alikk', comment: 'Komentar 3' },
+  ]);
 });
 
 app.post('/api/comments', (req, res) => {
+  // Ganti dengan logika untuk menyimpan komentar ke database
   res.json({ message: 'Komentar berhasil disimpan' });
 });
 
